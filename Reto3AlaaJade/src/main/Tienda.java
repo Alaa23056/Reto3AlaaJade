@@ -58,11 +58,7 @@ public class Tienda {
 
 	public static void listarProductos() {
 
-		/*
-		 * int idproducto, Categorias idcategoria, String nombre, double precio, String
-		 * descripcion, String color, String talla, int stock
-		 */
-
+		
 		List<Productos> listaProductos = ProductosDAO.listar();
 
 		for (Productos productos : listaProductos) {
@@ -72,7 +68,7 @@ public class Tienda {
 		}
 	}
 
-	// Listar productos por categoría:
+	
 
 	public static void gestionNuevoCliente(Scanner sc) {
 		// (int idcliente, String nombre, String direccion, int codigo
