@@ -7,9 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import clases.Categoria;
+import clases.Categorias;
 import clases.Productos;
-
 import util.Conexion;
 
 public class CategoriasDAO {
@@ -23,7 +22,7 @@ public class CategoriasDAO {
 	//insertar
 	
 	
-	public static void insertar(Categoria categoria ) {
+	public static void inserta(Categorias categoria ) {
 		String sql = "INSERT INTO categoria (nombre)  "
 				+ "VALUES (?)";
 
@@ -55,14 +54,14 @@ public class CategoriasDAO {
 	
 		
 	//mostrar 
-	public static List<Categoria> listar() {
-		List<Categoria> lista = new ArrayList<>();
+	public static List<Categorias> listarCategorias() {
+		List<Categorias> lista = new ArrayList<>();
 		try {
 			Connection con = Conexion.abreConexion();
 			PreparedStatement pst = con.prepareStatement("SELECT idCategoria, nombreCategoria FROM categoria");
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				lista.add(new Categoria(rs.getInt("idCategoria"), rs.getString("nombreCategoria")));
+				lista.add(new Categorias(rs.getInt("idCategoria"), rs.getString("nombreCategoria")));
 			}
 			rs.close();
 		} catch (Exception e) {

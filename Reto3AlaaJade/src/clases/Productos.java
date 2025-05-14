@@ -8,7 +8,7 @@ public class Productos {
 	 */
 
 	private int idproducto;
-	private Categoria idcategoria;
+	private Categorias idcategoria;
 	private String nombre;
 	private double precio;
 	private String descripcion;
@@ -17,7 +17,7 @@ public class Productos {
 	private String talla;
 	private int stock;
 
-	public Productos(int idproducto, Categoria idcategoria, String nombre, double precio, String descripcion, String color,
+	public Productos(int idproducto, Categorias idcategoria, String nombre, double precio, String descripcion, String color,
 			String talla, int stock) {
 		super();
 		this.idproducto = idproducto;
@@ -42,11 +42,11 @@ public class Productos {
 		this.idproducto = idproducto;
 	}
 
-	public Categoria getIdcategoria() {
+	public Categorias getIdcategoria() {
 		return idcategoria;
 	}
 
-	public void setIdcategoria(Categoria idcategoria) {
+	public void setIdcategoria(Categorias idcategoria) {
 		this.idcategoria = idcategoria;
 	}
 

@@ -1,7 +1,14 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 
+import DAO.CategoriasDAO;
+import DAO.ClientesDAO;
+import DAO.ProductosDAO;
+import clases.Categorias;
+import clases.Clientes;
+import clases.Productos;
 import util.Funciones;
 
 public class Tienda {
@@ -12,7 +19,6 @@ public class Tienda {
 
 		int opcion = 0;
 		do {
-			
 
 			System.out.println("1 - Mantenimientos: se mostrará el siguiente submenú: ");
 
@@ -24,9 +30,10 @@ public class Tienda {
 			System.out.println("0 -  salir ");
 			System.out.println("____________________________________________________________");
 			opcion = Funciones.dimeEntero("Introduce la opcion que quieras: ", sc);
-			
+
 			switch (opcion) {
 			case 1:
+
 				submenu1(sc);
 				break;
 			case 2:
@@ -46,6 +53,82 @@ public class Tienda {
 
 			}
 		} while (opcion > 5);
+
+	}
+
+	public static void listarProductos() {
+
+		/*
+		 * int idproducto, Categorias idcategoria, String nombre, double precio, String
+		 * descripcion, String color, String talla, int stock
+		 */
+
+		List<Productos> listaProductos = ProductosDAO.listar();
+
+		for (Productos productos : listaProductos) {
+			System.out.println(productos);
+			
+			
+		}
+	}
+
+	// Listar productos por categoría:
+
+	public static void gestionNuevoCliente(Scanner sc) {
+		// (int idcliente, String nombre, String direccion, int codigo
+
+		String nombre = Funciones.dimeString("Introduce nombre cliente", sc);
+		String direccion = Funciones.dimeString("Introduce direccion", sc);
+		int codigo = Funciones.dimeEntero("Introduce codigo", sc);
+
+		Clientes clienteNuevo = new Clientes(0, nombre, direccion, codigo);
+
+		ClientesDAO.inserta(clienteNuevo);
+
+	}
+
+	public static void mostrarCategoria() {
+
+		List<Categorias> listaCategorias = CategoriasDAO.listarCategorias();
+
+		for (Categorias categorias : listaCategorias) {
+
+			System.out.println(categorias);
+
+		}
+
+	}
+
+	public static void gestionDePorductos(Scanner sc) {
+
+		/*
+		 * (int idproducto, Categorias idcategoria, String nombre, double precio, String
+		 * descripcion, String color, String talla, int stock
+		 */
+
+		String nombre = Funciones.dimeString("Introduce nombre producto", sc);
+		double precio = Funciones.dimeDouble("Introduce precio", sc);
+		String descripcion = Funciones.dimeString("Introduce descripcion", sc);
+		String color = Funciones.dimeString("Introduce color", sc);
+		String talla = Funciones.dimeString("Introduce talla producto", sc);
+		int stock = Funciones.dimeEntero("Introduce stock", sc);
+
+		mostrarCategoria();
+
+		int codigoCategoria = Funciones.dimeEntero("Introduce codigo categoria", sc);
+		Categorias categoria = new Categorias(codigoCategoria, "");
+
+		Productos producto = new Productos(0, categoria, nombre, precio, descripcion, color, talla, stock);
+
+		ProductosDAO.insertarProducto(producto);
+
+	}
+
+	public static void gestionCategorias(Scanner sc) {
+
+		String nombreCategoria = Funciones.dimeString("Introduce categoria nueva: ", sc);
+		Categorias categoria = new Categorias(0, nombreCategoria);
+		CategoriasDAO.inserta(categoria);
 
 	}
 
@@ -98,7 +181,7 @@ public class Tienda {
 
 			switch (opcion) {
 			case 1:
-
+				listarProductos();
 				break;
 			case 2:
 
@@ -134,10 +217,13 @@ public class Tienda {
 
 			switch (opcion) {
 			case 1:
-
+				// gestion categoarias
+				gestionCategorias(sc);
 				break;
 			case 2:
 
+				// gestion de productos
+				gestionDePorductos(sc);
 				break;
 
 			case 3:
@@ -147,12 +233,12 @@ public class Tienda {
 
 				break;
 
-			case 5:
+			case 0:
 				System.out.println("salir");
 				break;
 
 			}
-		} while (opcion > 4);
+		} while (opcion != 0);
 
 	}
 
@@ -171,6 +257,8 @@ public class Tienda {
 
 			switch (opcion) {
 			case 1:
+
+				// alta de nuevos clientes
 
 				break;
 			case 2:
