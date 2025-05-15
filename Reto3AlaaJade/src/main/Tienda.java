@@ -56,19 +56,59 @@ public class Tienda {
 
 	}
 
+	/*
+	 * public static void actualiarClientes(Scanner sc) { // (int idcliente, String
+	 * nombre, String direccion, int codigo
+	 * 
+	 * String nombre = Funciones.dimeString("Introduce el nombre cliente", sc);
+	 * String direccion = Funciones.dimeString("Introduce direccion", sc); int
+	 * codigo = Funciones.dimeEntero("Introduce codigo cliente", sc);
+	 * 
+	 * Clientes cliente = new Clientes(0, nombre, direccion, codigo);
+	 * 
+	 * ClientesDAO.actualizar(cliente);
+	 * 
+	 * }
+	 */
+
+	public static void buscarActualizarCliente(Scanner sc) {
+		Clientes cliente = null;
+
+		do {
+
+			int codigoIntro = Funciones.dimeEntero("Introduce codigo del cliente", sc);
+			cliente = ClientesDAO.buscarPorCodigo(codigoIntro);
+
+		} while (cliente != null);
+
+		if (cliente != null) {
+
+			String nombre = Funciones.dimeString("Introduce el nombre cliente", sc);
+			String direccion = Funciones.dimeString("Introduce direccion", sc);
+			int codigo = Funciones.dimeEntero("Introduce codigo cliente", sc);
+
+			cliente = new Clientes(0, nombre, direccion, codigo);
+
+			ClientesDAO.actualizar(cliente);
+
+			System.out.println(cliente.toString());
+
+		} else {
+			System.out.println("No se ha podido encontrar ");
+
+		}
+
+	}
+
 	public static void listarProductos() {
 
-		
 		List<Productos> listaProductos = ProductosDAO.listar();
 
 		for (Productos productos : listaProductos) {
 			System.out.println(productos);
-			
-			
+
 		}
 	}
-
-	
 
 	public static void gestionNuevoCliente(Scanner sc) {
 		// (int idcliente, String nombre, String direccion, int codigo
@@ -219,10 +259,14 @@ public class Tienda {
 			case 2:
 
 				// gestion de productos
+
 				gestionDePorductos(sc);
 				break;
 
 			case 3:
+
+				buscarActualizarCliente(sc);
+
 				subsubmenu1(sc);
 				break;
 			case 4:

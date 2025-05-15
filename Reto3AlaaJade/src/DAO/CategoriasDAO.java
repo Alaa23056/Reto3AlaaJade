@@ -23,7 +23,7 @@ public class CategoriasDAO {
 	
 	
 	public static void inserta(Categorias categoria ) {
-		String sql = "INSERT INTO categoria (nombre)  "
+		String sql = "INSERT INTO categorias (nombre)  "
 				+ "VALUES (?)";
 
 		try {
@@ -58,7 +58,7 @@ public class CategoriasDAO {
 		List<Categorias> lista = new ArrayList<>();
 		try {
 			Connection con = Conexion.abreConexion();
-			PreparedStatement pst = con.prepareStatement("SELECT idCategoria, nombreCategoria FROM categoria");
+			PreparedStatement pst = con.prepareStatement("SELECT idCategoria, nombre nombreCategoria FROM categorias");
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				lista.add(new Categorias(rs.getInt("idCategoria"), rs.getString("nombreCategoria")));
