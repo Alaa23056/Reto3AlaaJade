@@ -54,22 +54,64 @@ public class Tienda {
 			}
 		} while (opcion > 5);
 
+	}public static void listarProductosPorCategoria(Scanner sc) {
+		List<Categorias> listaCategorias = CategoriasDAO.listarCategorias();
+		int idCategoria = 0;
+
+	
+
+		while (true) {
+
+			// PASO 1. Muestro las categorias
+			for (Categorias categorias : listaCategorias) {
+				System.out.println(categorias);
+
+			}
+
+			// 2. Usuario elije un id categoria
+			idCategoria = Funciones.dimeEntero("Introduce el id de categoria que quieras ", sc);
+
+			// 3. Si el id es correcto paso al siguiente, si el id es incorrecto vuelvo al
+			// paso 1
+			if (estaEnLalistaCategoria(listaCategorias, idCategoria)) {
+
+				// IR AL PASO 4
+				break;// salir del while
+			} else { // IR ALK PASO 1 }
+
+				System.out.println("El codigo es incorrecto, vuelve a ingresar categoria");
+			}
+		}
+
+		// 4. con la categoria elegida muestro los productos
+
+		List<Productos> listaProductos = ProductosDAO.listarPorCategoria(idCategoria);
+
+		for (Productos productos : listaProductos) {
+
+			System.out.println(productos);
+
+		}
+
 	}
 
-	/*
-	 * public static void actualiarClientes(Scanner sc) { // (int idcliente, String
-	 * nombre, String direccion, int codigo
-	 * 
-	 * String nombre = Funciones.dimeString("Introduce el nombre cliente", sc);
-	 * String direccion = Funciones.dimeString("Introduce direccion", sc); int
-	 * codigo = Funciones.dimeEntero("Introduce codigo cliente", sc);
-	 * 
-	 * Clientes cliente = new Clientes(0, nombre, direccion, codigo);
-	 * 
-	 * ClientesDAO.actualizar(cliente);
-	 * 
-	 * }
-	 */
+
+	
+	
+	public static Boolean estaEnLalistaCategoria(List<Categorias> listaCategorias, int idCategoria) {
+
+		Boolean siEsta = false;
+		for (Categorias cate : listaCategorias) {
+
+			if (cate.getIdCategoria() == idCategoria) {
+
+				siEsta = true;
+				break;
+			}
+
+		}
+		return siEsta;
+	}
 
 	public static void buscarActualizarCliente(Scanner sc) {
 		Clientes cliente = null;
@@ -79,22 +121,25 @@ public class Tienda {
 			int codigoIntro = Funciones.dimeEntero("Introduce codigo del cliente", sc);
 			cliente = ClientesDAO.buscarPorCodigo(codigoIntro);
 
-		} while (cliente != null);
+			if (cliente == null) {
+				System.out.println("No se ha podido encontrar");
+			}
+
+		} while (cliente == null);
 
 		if (cliente != null) {
-
+			System.out.println(cliente);
 			String nombre = Funciones.dimeString("Introduce el nombre cliente", sc);
 			String direccion = Funciones.dimeString("Introduce direccion", sc);
 			int codigo = Funciones.dimeEntero("Introduce codigo cliente", sc);
 
-			cliente = new Clientes(0, nombre, direccion, codigo);
+			cliente.setNombre(nombre);
+			cliente.setDireccion(direccion);
+			cliente.setCodigo(codigo);
 
 			ClientesDAO.actualizar(cliente);
 
 			System.out.println(cliente.toString());
-
-		} else {
-			System.out.println("No se ha podido encontrar ");
 
 		}
 

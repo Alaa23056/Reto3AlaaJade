@@ -25,7 +25,7 @@ public class ClientesDAO {
 			pst.setString(1, cliente.getNombre());
 			pst.setString(2, cliente.getDireccion());
 			pst.setInt(3, cliente.getCodigo());
-			
+			pst.setInt(4, cliente.getIdcliente());
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 0) {
 				throw new SQLException("Error: No se pudo actualizar cliente.");

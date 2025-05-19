@@ -19,7 +19,11 @@ public class CategoriasDAO {
 	ResultSet rs = null;
 
 	
-	//insertar
+
+
+
+
+
 	
 	
 	public static void inserta(Categorias categoria ) {
