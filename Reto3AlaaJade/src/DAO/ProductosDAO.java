@@ -13,6 +13,60 @@ import clases.Productos;
 import util.Conexion;
 
 public class ProductosDAO {
+	public static List<Productos> buscarPorNombre(Productos producto) {
+		// TODO Auto-generated method stub
+		List<Productos> lista = new ArrayList<Productos>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			con = Conexion.abreConexion();
+			pst = con.prepareStatement(
+					"select * from productos where nombre like ? and color = ? and talla = ?");
+			
+			pst.setString(1, producto.getNombre());
+			pst.setString(2, producto.getColor());
+			pst.setString(3, producto.getTalla());
+		
+
+			rs = pst.executeQuery();
+
+			while (rs.next())
+
+			{
+				Categorias categoria = new Categorias(rs.getInt("idcategoria"), rs.getString("categoria"));
+
+				Productos productoRecuperado = new Productos(
+						/*
+						 * (int idproducto, Categorias idcategoria, String nombre, double precio, String
+						 * descripcion, String color, String talla, int stock
+						 */
+
+						rs.getInt("idproducto"), categoria, rs.getString("nombreproducto"), rs.getDouble("precio"),
+						rs.getString("descripcion"), rs.getString("color"), rs.getString("talla"), rs.getInt("stock"));
+				lista.add(productoRecuperado);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pst != null)
+					pst.close();
+				Conexion.cierraConexion();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return lista;
+	}
+	
+	
+	
 	
 	
 	public static List<Productos> listarPorCategoria(int idCategoria) {

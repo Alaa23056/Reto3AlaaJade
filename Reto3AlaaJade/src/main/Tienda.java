@@ -54,25 +54,52 @@ public class Tienda {
 			}
 		} while (opcion > 5);
 
-	}public static void listarProductosPorCategoria(Scanner sc) {
+	}
+
+	public static List<Productos> filtrarPorductos(Scanner sc) {
+
+		ProductosDAO.listar();
+		// int idproducto, Categorias idcategoria, String nombre, double precio, String
+		// descripcion, String color,
+		// String talla, int stock
+
+		System.out.println("Introduce nombre producto");
+
+		String nombre = sc.nextLine();
+		System.out.println("Introduce color producto");
+		String color = sc.nextLine();
+		System.out.println("Introduce talla producto");
+		String talla = sc.nextLine();
+		Productos producto = new Productos(0, null, nombre, 0, "", color, talla, 0);
+
+		producto.setNombre(nombre);
+		producto.setColor(color);
+		producto.setTalla(talla);
+
+		List<Productos> listaFiltrada = ProductosDAO.buscarPorNombre(producto);
+
+		for (Productos productos : listaFiltrada) {
+
+			System.out.println(productos);
+
+		}
+
+		return listaFiltrada;
+	}
+
+	public static void listarProductosPorCategoria(Scanner sc) {
 		List<Categorias> listaCategorias = CategoriasDAO.listarCategorias();
 		int idCategoria = 0;
 
-	
-
 		while (true) {
 
-			// PASO 1. Muestro las categorias
 			for (Categorias categorias : listaCategorias) {
 				System.out.println(categorias);
 
 			}
 
-			// 2. Usuario elije un id categoria
 			idCategoria = Funciones.dimeEntero("Introduce el id de categoria que quieras ", sc);
 
-			// 3. Si el id es correcto paso al siguiente, si el id es incorrecto vuelvo al
-			// paso 1
 			if (estaEnLalistaCategoria(listaCategorias, idCategoria)) {
 
 				// IR AL PASO 4
@@ -95,9 +122,6 @@ public class Tienda {
 
 	}
 
-
-	
-	
 	public static Boolean estaEnLalistaCategoria(List<Categorias> listaCategorias, int idCategoria) {
 
 		Boolean siEsta = false;
@@ -265,7 +289,7 @@ public class Tienda {
 				listarProductos();
 				break;
 			case 2:
-
+				filtrarPorductos(sc);
 				break;
 
 			case 0:
