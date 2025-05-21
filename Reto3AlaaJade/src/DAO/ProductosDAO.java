@@ -23,12 +23,17 @@ public class ProductosDAO {
 		try {
 			con = Conexion.abreConexion();
 			pst = con.prepareStatement(
-					"select * from productos where nombre like ? and color = ? and talla = ?");
-			
-			pst.setString(1, producto.getNombre());
-			pst.setString(2, producto.getColor());
-			pst.setString(3, producto.getTalla());
-		
+					"SELECT idproducto, c.idcategoria ,c.nombre categoria , p.nombre nombreproducto, "
+					+ "precio, descripcion, color, talla, stock FROM productos p"
+							+" inner join "
+							+ "categorias c on c.idcategoria =p.idcategoria where p.nombre like ? "
+							+ "and color like ? and talla like ?");
+
+			pst.setString(1, '%' + producto.getNombre() + '%');
+			pst.setString(2,'%'+ producto.getColor()+'%');
+			pst.setString(3, '%'+producto.getTalla()+'%');
+
+			// 1 Camiseta blanca basica 9.99 Camiseta algodon 100% Blanco M 50
 
 			rs = pst.executeQuery();
 
@@ -64,7 +69,7 @@ public class ProductosDAO {
 
 		return lista;
 	}
-	
+
 	
 	
 	
